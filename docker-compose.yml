@@ -1,0 +1,28 @@
+
+
+services:
+  frontend:
+    build:
+      context: ./ai-tax-calc
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - ai-tax-network
+
+  backend:
+    build:
+      context: ./ai-tax-calc-backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    networks:
+      - ai-tax-network
+    environment:
+      - NODE_ENV=production
+
+networks:
+  ai-tax-network:
+    driver: bridge
