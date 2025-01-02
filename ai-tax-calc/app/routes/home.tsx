@@ -4,7 +4,7 @@ import { Welcome } from "../components/welcome";
 export function meta({ }: Route.MetaArgs) {
     return [
         { title: "Tax Calculation and Advisory" },
-        { name: "description", content: "Welcome to React Router!" },
+        { name: "Welcome Page", content: " Welcome to the Tax Calculation and Advisory website." },
     ];
 }
 

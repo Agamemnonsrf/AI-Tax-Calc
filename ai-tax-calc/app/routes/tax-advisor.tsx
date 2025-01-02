@@ -4,7 +4,7 @@ import type { Route } from "./+types/home";
 export function meta({ }: Route.MetaArgs) {
     return [
         { title: "Get Tax Advice" },
-        { name: "description", content: "Welcome to React Router!" },
+        { name: "Tax Advisor", content: "Get tax advice from our AI-powered tax advisor." },
     ];
 }
 

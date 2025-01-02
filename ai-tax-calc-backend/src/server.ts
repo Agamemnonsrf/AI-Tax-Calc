@@ -1,8 +1,9 @@
 import express, { Application, Request, Response, NextFunction } from "express";
 import cors from "cors";
-import { calculateTax, TaxFormData } from "./util"
+import { BusinessTaxFormData, calculateBusinessTax, calculateTax, TaxFormData } from "./util"
 import OpenAI from "openai";
 import dotenv from "dotenv";
+import { type } from "os";
 // Load environment variables from .env file
 dotenv.config();
 
@@ -21,6 +22,12 @@ app.get("/", (req: Request, res: Response) => {
 app.post("/calculate-tax", (req: Request, res: Response) => {
     const formData: TaxFormData = req.body;
     const result = calculateTax(formData);
+    res.json(result);
+});
+
+app.post("/calculate-business-tax", (req: Request, res: Response) => {
+    const formData: BusinessTaxFormData = req.body;
+    const result = calculateBusinessTax(formData);
     res.json(result);
 });
 

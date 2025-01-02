@@ -1,13 +1,13 @@
 import type { Route } from "./+types/home";
-import SalaryCalculator from "~/components/salary-calc-page/salary-calc";
+import TaxCalculator from "~/components/tax-calc-page/tax-calc";
 
 export function meta({ }: Route.MetaArgs) {
     return [
-        { title: "Calculate your salary" },
-        { name: "description", content: "Welcome to React Router!" },
+        { title: "Get Your Tax Analysis" },
+        { name: "Tax Calculator", content: "Get your tax analysis from our tax calculator tool." },
     ];
 }
 
 export default function SalaryCalculatorPage() {
-    return <SalaryCalculator />;
+    return <TaxCalculator />;
 }
