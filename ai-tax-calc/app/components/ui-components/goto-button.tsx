@@ -6,13 +6,14 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 interface GotoButtonProps {
     text: string;
     link: string;
+    size?: 'xs' | 'sm' | 'md' | 'lg';
 }
 
-const GotoButton: React.FC<GotoButtonProps> = ({ text, link }) => {
+const GotoButton: React.FC<GotoButtonProps> = ({ text, link, size = "lg" }) => {
     return (
         <Link to={link} className="flex items-center space-x-2">
             <button className="flex items-center px-4 py-2 border-2 border-transparent rounded-md bg-white text-black transition-all duration-300 hover:shadow-[0_0_0_4px_rgba(155,121,227,1)]">
-                <span className="mr-2 text-lg">{text}</span>
+                <span className={`mr-2 text-${size}`}>{text}</span>
                 <FontAwesomeIcon icon={faArrowRight} />
             </button>
         </Link>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import CtaButton from "./cta-button";
+import CtaButton from "../ui-components/cta-button";
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
 import type { DefaultizedPieValueType } from "@mui/x-charts";
 import type { BusinessTaxFormData, BusinessTaxResultData, CombinedFormProps, SalaryTaxFormData, SalaryTaxResultData } from "~/types";
@@ -151,7 +151,7 @@ export const CombinedForm = ({ isBusinessForm }: CombinedFormProps) => {
                                     suffix="€"
                                 />
                                 <InputField
-                                    label="Business Expenses"
+                                    label="Business Expenses:"
                                     value={(formData as BusinessTaxFormData).businessExpenses}
                                     onChange={handleChange}
                                     setFormData={setFormData}
@@ -185,12 +185,12 @@ export const CombinedForm = ({ isBusinessForm }: CombinedFormProps) => {
                                     suffix="€"
                                 />
                                 <InputField
-                                    label="Number of salaries per year:"
+                                    label="Amount of yearly salaries:"
                                     value={(formData as SalaryTaxFormData).numOfSalaries}
                                     onChange={handleChange}
                                     setFormData={setFormData}
                                     name={"numOfSalaries"}
-                                    step="1"
+                                    step="0.5"
                                 />
                                 <InputField
                                     label="Tax rate:"
