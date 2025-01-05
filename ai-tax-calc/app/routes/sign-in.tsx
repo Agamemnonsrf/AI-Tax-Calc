@@ -1,7 +1,6 @@
 import SignIn from "~/components/sign-in-page/sign-in";
 import type { Route } from "./+types/home";
 
-
 export function meta({ }: Route.MetaArgs) {
     return [
         { title: "Sign in" },

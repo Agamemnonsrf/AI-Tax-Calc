@@ -11,6 +11,14 @@ export default defineConfig({
         },
     },
     plugins: [reactRouter(), tsconfigPaths()],
+    optimizeDeps: {
+        include: ['@mui/x-charts'],
+    },
+    build: {
+        commonjsOptions: {
+            include: [/node_modules/, /@mui\/x-charts/],
+        },
+    },
     server: {
         port: 3000,
     },

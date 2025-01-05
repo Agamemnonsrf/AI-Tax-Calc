@@ -1,19 +1,17 @@
 import React from 'react';
 import GotoButton from '../ui-components/goto-button';
 import CtaButton from '../ui-components/cta-button';
+import { useAuthContext } from '../../context/AuthContext';
+import { faDoorOpen } from '@fortawesome/free-solid-svg-icons';
 
-interface UserStatusBoxProps {
-    isLoggedIn: boolean;
-    username?: string;
-}
-
-const UserStatusBox: React.FC<UserStatusBoxProps> = ({ isLoggedIn, username }) => {
-
+const UserStatusBox: React.FC = () => {
+    const { isLoggedIn, username, signOut } = useAuthContext();
+    console.log('UserStatusBox', isLoggedIn, username);
     if (isLoggedIn) {
         return (
             <div className="flex items-center gap-5 text-xs">
                 <p className=' border border-purple-400 p-2 rounded-lg bg-purple-600 bg-opacity-50'>Signed in as {username}</p>
-                <CtaButton text="Log Out" onClick={() => { }} />
+                <CtaButton text="Log Out" onClick={signOut} size='xs' icon={faDoorOpen} />
             </div>
         );
     }

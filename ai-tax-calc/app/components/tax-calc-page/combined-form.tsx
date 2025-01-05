@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import CtaButton from "../ui-components/cta-button";
-import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
+import { PieChart, pieArcLabelClasses } from '@mui/x-charts';
 import type { DefaultizedPieValueType } from "@mui/x-charts";
 import type { BusinessTaxFormData, BusinessTaxResultData, CombinedFormProps, SalaryTaxFormData, SalaryTaxResultData } from "~/types";
 import InputField from "./input-field";
@@ -40,7 +40,7 @@ export const CombinedForm = ({ isBusinessForm }: CombinedFormProps) => {
         return (resultData as SalaryTaxResultData).tax + (resultData as SalaryTaxResultData).netYear;
     }
 
-    const getArcLabel = (params: DefaultizedPieValueType) => {
+    const getArcLabel = (params: DefaultizedPieValueType): any => {
         const total = getTotal();
         const percent = params.value / total;
         if (percent === 0) return null; // Hide label for 0 values
@@ -102,7 +102,7 @@ export const CombinedForm = ({ isBusinessForm }: CombinedFormProps) => {
         setError(null);
         try {
             const result = await fetch(
-                isBusinessForm ? "http://localhost:5000/calculate-business-tax" : "http://localhost:5000/calculate-tax",
+                isBusinessForm ? "http://localhost:5000/calculate-tax/business-tax" : "http://localhost:5000/calculate-tax/salary-tax",
                 {
                     method: "POST",
                     headers: {

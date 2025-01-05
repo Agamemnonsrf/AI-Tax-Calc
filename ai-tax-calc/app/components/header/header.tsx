@@ -14,7 +14,7 @@ const Header: React.FC = () => {
                 </div>
             </Link>
             <div className='flex items-center space-x-4'>
-                <UserStatusBox isLoggedIn={false} />
+                <UserStatusBox />
             </div>
         </header>
     );

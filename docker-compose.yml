@@ -1,6 +1,38 @@
-
-
 services:
+  mysql:
+    image: mysql:8
+    container_name: mysql-container-db
+    environment:
+      MYSQL_ROOT_PASSWORD: aitaxcalcpassword
+      MYSQL_DATABASE: aitaxcalcdb
+      MYSQL_USER: aitaxcalcuser
+      MYSQL_PASSWORD: aitaxcalcpassword
+    ports:
+      - "3306:3306"
+    networks:
+      - ai-tax-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  backend:
+    build:
+      context: ./ai-tax-calc-backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - ai-tax-network
+    env_file:
+      - ./ai-tax-calc-backend/.env
+
   frontend:
     build:
       context: ./ai-tax-calc
@@ -12,17 +44,9 @@ services:
     networks:
       - ai-tax-network
 
-  backend:
-    build:
-      context: ./ai-tax-calc-backend
-      dockerfile: Dockerfile
-    ports:
-      - "5000:5000"
-    networks:
-      - ai-tax-network
-    environment:
-      - NODE_ENV=production
-
 networks:
   ai-tax-network:
     driver: bridge
+
+volumes:
+  mysql_data:
