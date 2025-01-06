@@ -27,11 +27,13 @@ const ChatSessions: React.FC<ChatSessionsProps> = ({
     const { isLoggedIn } = useAuth(); // example usage
     console.log(chatSessions)
     return (
-        <div className="w-1/4 text-black flex flex-col bg-white h-full rounded-s-xl z-10">
+        <div className="w-full h-52 md:h-auto md:w-1/4 text-black flex flex-col bg-white md:rounded-s-xl z-10">
             <h2 className="text-lg font-light m-4 self-center text-gray-700">Chat Sessions</h2>
-            <CtaButton text="New Session" onClick={handleNewSession} widthType="full" size={"sm"} icon={faPenToSquare} />
+            <div className="w-full flex justify-center">
+                <CtaButton text="New Session" onClick={handleNewSession} widthType="auto" size={"sm"} icon={faPenToSquare} />
+            </div>
             {/* <CtaButton text="Simulate Error" onClick={() => setSimulateError(true)} widthType="full" /> */}
-            <div className="overflow-y-auto flex-1 px-2">
+            <div className="overflow-y-auto flex flex-row gap-3 md:gap-0 md:flex-col px-2">
                 {isLoggedIn && sessionError ? (
                     <div className="flex items-center justify-center h-full">
                         <p>{sessionError}</p>
@@ -44,7 +46,7 @@ const ChatSessions: React.FC<ChatSessionsProps> = ({
                     chatSessions.map(session => (
                         <div
                             key={session.id}
-                            className={`p-2 my-2 text-sm rounded-sm cursor-pointer ${session.id === currentSessionId ? "bg-purple-600 text-white" : "bg-gray-100 border text-black hover:bg-gray-200"}`}
+                            className={`p-2 my-2 text-sm rounded-sm min-w-max text-nowrap cursor-pointer ${session.id === currentSessionId ? "bg-purple-600 text-white" : "bg-gray-100 border text-black hover:bg-gray-200"}`}
                             onClick={() => handleSessionClick(session.id)}
                         >
                             {session.sessionName}

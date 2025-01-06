@@ -69,8 +69,8 @@ const SignInForm: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col md:flex-row w-2/3 self-center bg-white rounded-lg">
-            <div className="flex-1 flex flex-col justify-between items-center bg-gray-100 rounded-s-lg p-8">
+        <div className="flex flex-col md:flex-row w-full md:w-2/3 self-center bg-white rounded-lg">
+            <div className="flex-1 flex flex-col justify-between items-center bg-gray-100 rounded-lg md:rounded-s-lg p-8">
                 <h2 className="text-2xl font-bold mb-6 text-black self-start justify-self-start">Sign In</h2>
                 <Form className="w-full max-w-sm h-full justify-between flex flex-col" onSubmit={signIn}>
                     <div>
@@ -79,7 +79,7 @@ const SignInForm: React.FC = () => {
                                 Username
                             </label>
                             <input
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow bg-black appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
                                 id="usernameSignIn"
                                 type="text"
                                 placeholder="Username"
@@ -93,7 +93,7 @@ const SignInForm: React.FC = () => {
                                 Password
                             </label>
                             <input
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow bg-black appearance-none border rounded w-full py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline"
                                 id="passwordSignIn"
                                 type="password"
                                 placeholder="********"
@@ -118,7 +118,7 @@ const SignInForm: React.FC = () => {
                             Username
                         </label>
                         <input
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow bg-black appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
                             type="text"
                             placeholder="Username"
                             required
@@ -132,7 +132,7 @@ const SignInForm: React.FC = () => {
                             Password
                         </label>
                         <input
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow bg-black appearance-none border rounded w-full py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline"
                             type="password"
                             placeholder="********"
                             required
@@ -146,7 +146,7 @@ const SignInForm: React.FC = () => {
                             Confirm Password
                         </label>
                         <input
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow bg-black appearance-none border rounded w-full py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline"
                             type="password"
                             placeholder="********"
                             required

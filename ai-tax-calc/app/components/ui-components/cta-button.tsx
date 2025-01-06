@@ -11,7 +11,7 @@ interface CtaButtonProps {
     isDestructive?: boolean;
     isInvertColor?: boolean;
     disabled?: boolean;
-    onClick?: () => void;
+    onClick?: (() => void) | ((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void);
 }
 
 const CtaButton: React.FC<CtaButtonProps> = ({ text, buttonType, size = "lg", icon = faPieChart, widthType = 'auto', onClick, isDestructive = false, isInvertColor = false, disabled = false }) => {
@@ -50,7 +50,7 @@ const CtaButton: React.FC<CtaButtonProps> = ({ text, buttonType, size = "lg", ic
     }
 
     return (
-        <button disabled={disabled} onClick={onClick} type={buttonType} className={`flex items-center justify-center px-4 py-2 border-2 border-transparent rounded-md ${color} transition-all duration-300 hover:shadow-[0_0_0_4px_rgba(155,121,227,1)] text-${size}`}>
+        <button disabled={disabled} onClick={onClick} type={buttonType} className={`flex w-fit items-center justify-center px-4 py-2 border-2 border-transparent rounded-md ${color} transition-all duration-300 hover:shadow-[0_0_0_4px_rgba(155,121,227,1)] text-${size}`}>
             <span className="mr-2 text-center">{text}</span>
             <FontAwesomeIcon icon={icon} />
         </button>

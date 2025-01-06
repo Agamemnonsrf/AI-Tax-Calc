@@ -54,7 +54,7 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
                             <CtaButton disabled={chatSessions.length <= 1} text="Delete Session" size="sm" isDestructive icon={faTrash} onClick={() => setShowDeleteDialog(true)} />
                         </div>
                     </div>
-                    <div className="flex-1 p-2 overflow-y-auto w-full flex flex-col pb-32 px-4">
+                    <div className="flex-1 p-2 overflow-y-auto w-full flex h-full md:h-auto flex-col pb-32 px-4">
                         {loading
                             ? <></>
                             : <>{chat.messages.map((chatItem, index) => (
@@ -81,14 +81,14 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
                                 )}
                             </>
                         }</div>
-                    {chat.messages.length <= 2 && <div className="w-full mb-16 px-2 flex gap-1 overflow-x-scroll overflow-y-hidden absolute bottom-0">
+                    {chat.messages.length <= 2 && <div className="w-full mb-24 md:mb-16 px-2 flex gap-1 overflow-x-scroll overflow-y-hidden absolute bottom-0">
                         {sampleQuestions.map((sampleQuestion, index) => (
-                            <div key={index} className="p-2 m-2 rounded-xl bg-black  min-w-80 flex items-center justify-center text-xs text-neutral-200 cursor-pointer hover:bg-neutral-800" onClick={() => setQuestion(sampleQuestion)}>
+                            <div key={index} className="p-2 m-2 rounded-xl bg-black min-w-80 flex items-center justify-center text-xs text-neutral-200 cursor-pointer hover:bg-neutral-800" onClick={() => setQuestion(sampleQuestion)}>
                                 {sampleQuestion}
                             </div>
                         ))}
                     </div>}
-                    <div className="flex w-full h-16">
+                    <div className="flex w-full h-24 md:h-16">
                         <textarea
                             placeholder="Enter your question here"
                             className="w-full h-full p-2 bg-white text-black text-sm outline-none resize-none"

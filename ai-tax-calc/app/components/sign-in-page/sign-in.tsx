@@ -9,8 +9,8 @@ const SignIn: React.FC = () => {
 
     return (
         <main className="h-svh bg-black">
-            <div className="space-y-10 p-5 flex flex-col">
-                <div className="mt-5"></div>
+            <div className="space-y-10 px-0 py-5 md:p-5 flex flex-col">
+                <div className="mt-16 md:mt-5"></div>
                 <h2 className="text-5xl md:text-6xl font-extrabold text-white">Sign in</h2>
                 <Tooltip text="Create an account or sign in to save your sessions with our Tax Advisor." size="sm" />
                 <SignInForm />

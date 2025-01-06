@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import CtaButton from "../ui-components/cta-button";
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts';
 import type { DefaultizedPieValueType } from "@mui/x-charts";
 import type { BusinessTaxFormData, BusinessTaxResultData, CombinedFormProps, SalaryTaxFormData, SalaryTaxResultData } from "~/types";
 import InputField from "./input-field";
-
+import { useIsMobile } from "~/hooks/useIsMobile";
 
 
 export const CombinedForm = ({ isBusinessForm }: CombinedFormProps) => {
@@ -23,12 +23,18 @@ export const CombinedForm = ({ isBusinessForm }: CombinedFormProps) => {
 
     const [error, setError] = useState<string | null>(null);
 
-    const resultsExist = () => {
+    const isMobile = useIsMobile();
+
+
+    const calcResults = () => {
         if (isBusinessForm) {
             return (resultData as BusinessTaxResultData).netIncome !== 0;
         }
         return (resultData as SalaryTaxResultData).netYear !== 0;
     }
+
+    const resultsExist = calcResults();
+
 
     const getTotal = () => {
         if (isBusinessForm) {
@@ -100,6 +106,25 @@ export const CombinedForm = ({ isBusinessForm }: CombinedFormProps) => {
     const calculateTax = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         setError(null);
+
+        const businessFormData = formData as BusinessTaxFormData;
+        const salaryFormData = formData as SalaryTaxFormData;
+
+        const isEmpty = (value: any) => value === null || value === undefined || value === 0 || value === '';
+
+        if (isBusinessForm) {
+            const businessFormData = formData as BusinessTaxFormData;
+            if (isEmpty(businessFormData.grossRevenue) || isEmpty(businessFormData.taxRate) || isEmpty(businessFormData.businessExpenses)) {
+                setError("empty fields");
+                return;
+            }
+        } else {
+            const salaryFormData = formData as SalaryTaxFormData;
+            if (isEmpty(salaryFormData.taxRate) || isEmpty(salaryFormData.grossMonth) || isEmpty(salaryFormData.numOfSalaries)) {
+                setError("empty fields");
+                return;
+            }
+        }
         try {
             const result = await fetch(
                 isBusinessForm ? "http://localhost:5000/calculate-tax/business-tax" : "http://localhost:5000/calculate-tax/salary-tax",
@@ -122,11 +147,13 @@ export const CombinedForm = ({ isBusinessForm }: CombinedFormProps) => {
             } else {
                 setError("An unknown error occurred");
             }
+        } finally {
+            setError(null);
         }
     };
 
     return (
-        <div className="flex flex-col h-full gap-10 p-5 bg-white rounded-xl w-2/3 self-center">
+        <div className="flex flex-col h-full gap-10 p-5 bg-white md:rounded-xl w-full md:w-2/3 self-center">
             <div className="gap-4 flex flex-col">
                 <h3 className="text-2xl md:text-xl font-bold text-gray-900">
                     {isBusinessForm ? "For Business Owners" : "For Salaried Employees"}
@@ -137,7 +164,7 @@ export const CombinedForm = ({ isBusinessForm }: CombinedFormProps) => {
                         {error}
                     </div>
                 )}
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-0 md:justify-between">
                     <div className="flex flex-col items-center justify-between gap-5">
                         {isBusinessForm ? (
                             <>
@@ -208,16 +235,18 @@ export const CombinedForm = ({ isBusinessForm }: CombinedFormProps) => {
                             </>
                         )}
                     </div>
-                    <div className="flex">
+                    <div className="flex w-80 h-96 md:w-1/2 items-start justify-start">
                         <PieChart
                             series={[
                                 {
                                     innerRadius: 10,
                                     outerRadius: 100,
                                     cornerRadius: 5,
-                                    highlightScope: { fade: 'series', highlight: 'item' },
+                                    cx: '70%',
+                                    cy: '40%',
+                                    highlightScope: { fade: resultsExist ? 'series' : "none", highlight: resultsExist ? 'item' : "none" },
                                     faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
-                                    data: resultsExist()
+                                    data: resultsExist
                                         ? isBusinessForm
                                             ? [
                                                 { label: 'Amount Taxed', value: (resultData as BusinessTaxResultData).tax },
@@ -232,7 +261,7 @@ export const CombinedForm = ({ isBusinessForm }: CombinedFormProps) => {
                                             { label: '', value: 100 },
                                         ],
                                     arcLabel(item) {
-                                        if (resultsExist()) {
+                                        if (resultsExist) {
                                             const percent = item.value / getTotal();
                                             if (percent < 0.05) return null; // Hide label for very small percentages
                                             return getArcLabel(item);
@@ -241,26 +270,32 @@ export const CombinedForm = ({ isBusinessForm }: CombinedFormProps) => {
                                     },
                                 }
                             ]}
-                            colors={resultsExist() ? ['#f44336', '#4caf50', '#2196f3', '#ffeb3b'] : ['#f0f0f0']}
-                            width={500}
-                            height={200}
+                            colors={resultsExist ? ['#f44336', '#4caf50', '#2196f3', '#ffeb3b'] : ['#f0f0f0']}
+                            // width={chartWidth}
+                            // height={chartHeight}
                             sx={{
                                 [`& .${pieArcLabelClasses.root}`]: {
                                     fill: 'white',
                                     fontSize: 14,
                                 },
+                                pointerEvents: isMobile ? "none" : "auto",
                             }}
                             slotProps={{
-                                legend: { hidden: resultsExist() ? false : true },
+                                legend: {
+                                    hidden: resultsExist ? false : true, position: {
+                                        horizontal: 'middle',
+                                        vertical: 'bottom',
+                                    }
+                                },
                             }}
                             tooltip={{
-                                trigger: resultsExist() ? "item" : "none",
+                                trigger: resultsExist ? "item" : "none",
                             }}
                         />
                     </div>
                 </div>
             </div>
             <CtaButton onClick={calculateTax} text="Calculate" buttonType="submit" />
-        </div>
+        </div >
     );
 };
