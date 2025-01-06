@@ -6,7 +6,7 @@ import calculateTaxRoutes from "./routes/calculate-tax/calculate-tax";
 import authRoutes from "./routes/auth/auth";
 import taxAdvisorRoutes from "./routes/tax-advisor/tax-advisor";
 import bodyParser from "body-parser";
-import { createUsersTable } from "./routes/auth/db";
+import { createChatMessagesTable, createChatSessionsTable, createUsersTable } from "./routes/auth/db";
 
 dotenv.config();
 
@@ -21,13 +21,14 @@ const envVars = [
     process.env.DB_NAME,
     process.env.DB_HOST,
     process.env.DB_PORT,
-    process.env.DB_SECRET_KEY,
-    process.env.OPENAI_API_KEY
 ];
 
+//not required, only used for chat and auth
+//process.env.DB_SECRET_KEY,
+//process.env.OPENAI_API_KEY
 
 if (envVars.some((v) => !v)) {
-    console.error("Missing required environment variables. Check your .env file.");
+    console.error("Missing required environment variables. Check your .env file.: ", envVars);
     process.exit(1);
 }
 
@@ -36,9 +37,12 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 
-
-createUsersTable();
-
+(async () => {
+    await createUsersTable();
+    await createChatSessionsTable();
+    await createChatMessagesTable();
+}
+)();
 app.use("/auth", authRoutes)
 
 app.use("/calculate-tax", calculateTaxRoutes);

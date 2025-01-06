@@ -21,20 +21,94 @@ export const initConnection = async () => {
 }
 
 export const createUsersTable = async () => {
-    const connection = await initConnection();
-
-    const createTableQuery = `
+    try {
+        const connection = await initConnection();
+        if (!connection) {
+            throw new Error('Error connecting to database');
+        }
+        console.log('Connected to database');
+        const createTableQuery = `
         CREATE TABLE IF NOT EXISTS users (
             id INT AUTO_INCREMENT PRIMARY KEY,
             username VARCHAR(255) NOT NULL,
             password VARCHAR(255) NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE (username)
         )
     `;
 
-    connection.execute(createTableQuery);
-    connection.end();
+        const result = await connection.execute(createTableQuery);
+        console.log('Created users table:', result);
+        connection.end();
+    }
+    catch (error) {
+        console.error('Error creating users table:', error);
+    }
 };
 
 
+
+export const createChatSessionsTable = async () => {
+    try {
+        const connection = await initConnection();
+        const result = await connection.execute(`
+        CREATE TABLE IF NOT EXISTS chat_sessions (
+            u_id VARCHAR(255) PRIMARY KEY,
+            id INT,
+            user_id INT NOT NULL,
+            session_name VARCHAR(255) NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id)
+        )
+    `);
+        console.log('Created chat sessions table:', result);
+        connection.end();
+    }
+    catch (error) {
+        console.error('Error creating chat sessions table:', error);
+    }
+};
+
+export interface ChatSession {
+    id: number;
+    user_id: number;
+    session_data: any;
+    created_at: Date;
+}
+
+export const createChatMessagesTable = async () => {
+    try {
+        const connection = await initConnection();
+        const result = await connection.execute(`
+        CREATE TABLE IF NOT EXISTS chat_messages (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            session_id VARCHAR(255) NOT NULL,
+            msg_index INT NOT NULL,
+            user_id INT NOT NULL,
+            sender VARCHAR(255) NOT NULL,
+            message TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (session_id) REFERENCES chat_sessions(u_id)
+        )
+    `);
+        console.log('Created chat messages table:', result);
+        connection.end();
+    } catch (error) {
+        console.error('Error creating chat messages table:', error);
+    }
+}
+
+enum Sender {
+    User = 'user',
+    System = 'system',
+}
+
+export interface ChatMessage {
+    id: number;
+    session_id: number;
+    user_id: number;
+    sender: Sender;
+    message: string;
+    created_at: Date;
+}
 

@@ -10,9 +10,7 @@ import { QueryResult } from 'mysql2/promise';
 dotenv.config();
 const router = express.Router();
 const SECRET_KEY = process.env.DB_SECRET_KEY;
-if (!SECRET_KEY) {
-    throw new Error('SECRET_KEY is not defined');
-}
+
 
 interface SignUpRequestBody {
     usernameSignUp: string;
@@ -26,6 +24,10 @@ type SignUpResponseBody =
 const signUpHandler: RequestHandler<{}, SignUpResponseBody, SignUpRequestBody> = async (req, res) => {
     const { usernameSignUp, passwordSignUp } = req.body;
     console.log('Received signup request:', { usernameSignUp, passwordSignUp });
+    if (!SECRET_KEY) {
+        res.status(500).json({ error: 'No DB key present' });
+        return;
+    }
 
     try {
         const hashedPassword = await bcrypt.hash(passwordSignUp, 10);
@@ -67,6 +69,10 @@ type SignInResponseBody =
 const signInHandler: RequestHandler<{}, SignInResponseBody, SignInRequestBody> = async (req, res) => {
     const { usernameSignIn, passwordSignIn } = req.body;
     console.log('Received sign in request:', { usernameSignIn, passwordSignIn });
+    if (!SECRET_KEY) {
+        res.status(500).json({ error: 'No DB key present' });
+        return;
+    }
     try {
         const userResult: QueryResult | null = await findUserByUsername(usernameSignIn);
         if (!userResult || (userResult as User[]).length === 0) {
