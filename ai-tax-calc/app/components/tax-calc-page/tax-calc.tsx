@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { CombinedForm } from "./combined-form";
 import Tooltip from "../ui-components/tooltip";
 
-const TaxCalculator: React.FC = () => {
+export const TaxCalculator: React.FC = () => {
 
     return (
         <main className="h-svh bg-black">
@@ -16,5 +16,3 @@ const TaxCalculator: React.FC = () => {
         </main>
     )
 };
-
-export default TaxCalculator;

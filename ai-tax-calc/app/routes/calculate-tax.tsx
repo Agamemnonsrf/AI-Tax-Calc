@@ -1,5 +1,5 @@
 import type { Route } from "./+types/home";
-import TaxCalculator from "~/components/tax-calc-page/tax-calc";
+import { TaxCalculator } from "~/components/tax-calc-page/tax-calc";
 
 export function meta({ }: Route.MetaArgs) {
     return [

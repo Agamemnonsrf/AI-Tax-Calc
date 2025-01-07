@@ -68,7 +68,7 @@ const taxAdviceHandlerMock: RequestHandler<{}, TaxAdviceResponseBody, TaxAdviceR
     const answer = `This is a mock response to the question: "${payload.question}", because there is no OpenAI API key present.`;
     res.json({ answer: answer });
 }
-console.log("apikey:" + process.env.OPENAI_API_KEY)
+
 router.post("/tax-advice", process.env.OPENAI_API_KEY ? taxAdviceHandler : taxAdviceHandlerMock);
 router.post("/tax-advice-mock", taxAdviceHandlerMock);
 

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import GotoButton from "./ui-components/goto-button";
 import { Link } from "react-router";
-import { useIsMobile } from "~/hooks/useIsMobile";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 export const Welcome = () => {
     const isMobile = useIsMobile();
