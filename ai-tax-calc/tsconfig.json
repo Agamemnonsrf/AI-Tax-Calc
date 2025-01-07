@@ -3,7 +3,8 @@
         "**/*",
         "**/.server/**/*",
         "**/.client/**/*",
-        ".react-router/types/**/*"
+        ".react-router/types/**/*",
+        "jest.setup.ts"
     ],
     "compilerOptions": {
         "lib": [
@@ -13,7 +14,8 @@
         ],
         "types": [
             "node",
-            "vite/client"
+            "vite/client",
+            "jest",
         ],
         "target": "ES2022",
         "module": "ES2022",
