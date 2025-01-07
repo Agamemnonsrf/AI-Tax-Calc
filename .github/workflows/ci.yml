@@ -41,12 +41,12 @@ jobs:
 
       - name: Create .env file for backend
         run: |
-          cp .env.example backend/.env
+          cp .env.example ai-tax-calc-backend/.env
 
       # Step 3: Install and test the backend
       - name: Install Backend Dependencies
         run: |
-          cd backend
+          cd ai-tax-calc-backend
           npm install
       - name: Run Backend Tests
         run: |
@@ -56,11 +56,11 @@ jobs:
       # Step 4: Install and test the frontend
       - name: Install Frontend Dependencies
         run: |
-          cd frontend
+          cd ai-tax-calc
           npm install
       - name: Run Frontend Tests
         run: |
-          cd frontend
+          cd ai-tax-calc
           npm test
 
       # Step 5: Build and validate Docker Compose
