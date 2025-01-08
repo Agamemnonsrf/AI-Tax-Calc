@@ -76,5 +76,5 @@ jobs:
       # Step 5: Build and validate Docker Compose
       - name: Build and Test Docker Compose
         run: |
-          docker-compose up --build -d
-          docker-compose ps
+          docker compose up --build -d
+          docker compose ps
