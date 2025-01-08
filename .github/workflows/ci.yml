@@ -11,7 +11,10 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-
+    env:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      
     services:
       mysql:
         image: mysql:8
@@ -45,7 +48,7 @@ jobs:
 
       - name: Wait for MySQL
         run: |
-          while ! mysqladmin ping -h 127.0.0.1 --user=root --password=aitaxcalcpassword --silent; do
+          while ! mysqladmin ping -h 127.0.0.1 --user=aitaxcalcuser --password=aitaxcalcpassword --silent; do
             echo "Waiting for MySQL..."
             sleep 3
           done
