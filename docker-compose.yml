@@ -7,8 +7,8 @@ services:
       MYSQL_DATABASE: aitaxcalcdb
       MYSQL_USER: aitaxcalcuser
       MYSQL_PASSWORD: aitaxcalcpassword
-    ports:
-      - "${MYSQL_PORT:-3306}:3306"
+    # ports:
+    #   - "${MYSQL_PORT:-3306}:3306"
     networks:
       - ai-tax-network
     healthcheck:
