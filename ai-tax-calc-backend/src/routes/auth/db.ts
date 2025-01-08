@@ -6,18 +6,23 @@ import crypto from 'crypto';
 dotenv.config();
 
 export const initConnection = async () => {
-    if (!process.env.DB_HOST || !process.env.DB_PORT || !process.env.DB_USER || !process.env.DB_PASS || !process.env.DB_NAME) {
-        throw new Error('DB_HOST is not defined');
+    try {
+        if (!process.env.DB_HOST || !process.env.DB_PORT || !process.env.DB_USER || !process.env.DB_PASS || !process.env.DB_NAME) {
+            throw new Error('DB_HOST is not defined');
+        }
+
+        return await mysql.createConnection({
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            password: process.env.DB_PASS,
+            database: process.env.DB_NAME,
+            port: parseInt(process.env.DB_PORT, 10),
+
+        });
+    } catch (error) {
+        console.error('Error creating connection:', error);
+        throw error;
     }
-
-    return mysql.createConnection({
-        host: process.env.DB_HOST,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASS,
-        database: process.env.DB_NAME,
-        port: parseInt(process.env.DB_PORT, 10),
-
-    });
 }
 
 export const createUsersTable = async () => {
@@ -51,6 +56,9 @@ export const createUsersTable = async () => {
 export const createChatSessionsTable = async () => {
     try {
         const connection = await initConnection();
+        if (!connection) {
+            throw new Error('Error connecting to database');
+        }
         const result = await connection.execute(`
         CREATE TABLE IF NOT EXISTS chat_sessions (
             u_id VARCHAR(255) PRIMARY KEY,
@@ -79,6 +87,9 @@ export interface ChatSession {
 export const createChatMessagesTable = async () => {
     try {
         const connection = await initConnection();
+        if (!connection) {
+            throw new Error('Error connecting to database');
+        }
         const result = await connection.execute(`
         CREATE TABLE IF NOT EXISTS chat_messages (
             id INT AUTO_INCREMENT PRIMARY KEY,
