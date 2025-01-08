@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
-import { BusinessTaxFormData, calculateBusinessTax, calculateTax, TaxFormData } from './util';
+import { calculateBusinessTax, calculateTax } from './util';
+import { BusinessTaxFormData, TaxFormData } from '../auth/models/tax';
 
 const router = express.Router();
 

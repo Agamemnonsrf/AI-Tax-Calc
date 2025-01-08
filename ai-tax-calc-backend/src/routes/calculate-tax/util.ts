@@ -1,27 +1,5 @@
-export type TaxFormData = {
-    grossMonth: number;
-    numOfSalaries: number;
-    taxRate: number;
-};
+import { BusinessTaxFormData, BusinessTaxResultData, TaxFormData, TaxResultData } from "../auth/models/tax";
 
-export type TaxResultData = {
-    grossYear: number;
-    tax: number;
-    netYear: number;
-    netMonth: number;
-};
-
-export interface BusinessTaxFormData {
-    grossRevenue: number;
-    businessExpenses: number
-    taxRate: number;
-}
-
-export interface BusinessTaxResultData {
-    taxableIncome: number;
-    tax: number;
-    netIncome: number;
-}
 
 export const calculateTax = (data: TaxFormData): TaxResultData => {
     const { grossMonth, numOfSalaries, taxRate } = data;

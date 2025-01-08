@@ -1,20 +1,13 @@
 import express, { Request, Response, RequestHandler } from 'express';
 import OpenAI from 'openai';
 import jwt from 'jsonwebtoken';
-import { createChatMessagesTable, createChatSessionsTable, initConnection } from '../auth/db';
+import { initConnection } from '../auth/db';
 import dotenv from 'dotenv';
+import { TaxAdviceResponseBody, TaxAdviceRequestBody, SaveSessionResponseBody, SaveSessionRequestBody, GetSessionsResponseBody, DeleteSessionResponseBody, DeleteSessionRequestBody } from '../auth/models/advisor';
 const router = express.Router();
 
 dotenv.config();
 
-interface TaxAdviceRequestBody {
-    question: string;
-    history: OpenAI.Chat.Completions.ChatCompletionMessageParam[];
-}
-interface TaxAdviceResponseBody {
-    answer?: string;
-    error?: string;
-}
 
 const authorize = (token: string | undefined): string | null => {
     if (!token || !process.env.DB_SECRET_KEY) {
@@ -72,23 +65,7 @@ const taxAdviceHandlerMock: RequestHandler<{}, TaxAdviceResponseBody, TaxAdviceR
 router.post("/tax-advice", process.env.OPENAI_API_KEY ? taxAdviceHandler : taxAdviceHandlerMock);
 router.post("/tax-advice-mock", taxAdviceHandlerMock);
 
-type Message = {
-    role: "system" | "user";
-    content: string;
-    index: number;
-};
 
-type ChatSession = {
-    id: number;
-    uId: string;
-    message: Message;
-    sessionName: string;
-};
-
-interface SaveSessionRequestBody {
-    sessionData: ChatSession;
-}
-type SaveSessionResponseBody = { message: string } | { error: string };
 
 const saveSessionHandler: RequestHandler<{}, SaveSessionResponseBody, SaveSessionRequestBody> = async (req, res) => {
     try {
@@ -136,10 +113,6 @@ const saveSessionHandler: RequestHandler<{}, SaveSessionResponseBody, SaveSessio
 
 router.post("/saveSession", saveSessionHandler);
 
-interface GetSessionsResponseBody {
-    sessions?: any[];
-    error?: string;
-}
 
 const getSessionsHandler: RequestHandler<{}, GetSessionsResponseBody> = async (req, res) => {
     try {
@@ -200,10 +173,7 @@ const getSessionsHandler: RequestHandler<{}, GetSessionsResponseBody> = async (r
 
 router.get("/getSessions", getSessionsHandler);
 
-interface DeleteSessionRequestBody {
-    sessionId: string;
-}
-type DeleteSessionResponseBody = { message: string } | { error: string };
+
 
 const deleteSessionHandler: RequestHandler<{}, DeleteSessionResponseBody, DeleteSessionRequestBody> = async (req, res) => {
     try {
