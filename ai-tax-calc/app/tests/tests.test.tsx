@@ -4,9 +4,9 @@ import { Welcome } from "../components/welcome";
 import { TextEncoder, TextDecoder } from 'util'
 import { BrowserRouter, createMemoryRouter, Route, RouterProvider, Routes } from 'react-router';
 import { TaxCalculator } from '../components/tax-calc-page/tax-calc';
-import TaxAdvisor from '~/routes/tax-advisor';
 import SignIn from '~/components/sign-in-page/sign-in';
 import { AuthProvider } from '~/context/AuthContext';
+import TaxAdvisorPage from '~/components/tax-advisor-page/tax-advisor-page';
 
 global.TextEncoder = TextEncoder
 // @ts-expect-error
@@ -37,7 +37,7 @@ it('can render all pages', async () => {
     document.body.appendChild(container3);
 
     await act(async () => {
-        ReactDOMClient.createRoot(container3).render(<BrowserRouter><TaxAdvisor /></BrowserRouter>);
+        ReactDOMClient.createRoot(container3).render(<BrowserRouter><TaxAdvisorPage /></BrowserRouter>);
     });
 
     const label3 = container3.querySelector('h2');
