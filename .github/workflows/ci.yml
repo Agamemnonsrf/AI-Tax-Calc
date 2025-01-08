@@ -47,13 +47,6 @@ jobs:
         run: |
           cp .env.example ai-tax-calc-backend/.env
 
-      - name: Wait for MySQL
-        run: |
-          while ! mysqladmin ping -h 127.0.0.1 --user=aitaxcalcuser --password=aitaxcalcpassword --silent; do
-            echo "Waiting for MySQL..."
-            sleep 3
-          done
-
       # Step 3: Install and test the backend
       - name: Install Backend Dependencies
         run: |
