@@ -16,17 +16,24 @@ describe('Server tests', () => {
     });
 
     it('should connect to the database successfully', async () => {
-        let connection: Connection | undefined;
+        let connection: Connection | null = null;
         let error;
         try {
             connection = await initConnection();
+            if (!connection) {
+                throw new Error('No database connection returned');
+            }
         } catch (e) {
+            console.error('Error connecting to the database:', e);
             error = e;
         }
-        expect(connection).toBeDefined();
         expect(error).toBeUndefined();
+        expect(connection).toBeDefined();
         if (connection) {
             await connection.end();
+        }
+        if (error) {
+            console.error('Error connecting to the database:', error);
         }
     });
 });

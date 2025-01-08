@@ -13,6 +13,9 @@ export interface User {
 
 export const createUser = async (username: string, password: string) => {
     const connection = await initConnection();
+    if (!connection) {
+        return null;
+    }
     try {
         const [rows] = await connection.query(
             'INSERT INTO users (username, password) VALUES (?, ?)',
@@ -28,6 +31,9 @@ export const createUser = async (username: string, password: string) => {
 
 export const findUserByUsername = async (username: string) => {
     const connection = await initConnection();
+    if (!connection) {
+        return null;
+    }
     try {
         const [rows] = await connection.query(
             'SELECT * FROM users WHERE username = ?',

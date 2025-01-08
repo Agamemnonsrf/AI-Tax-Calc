@@ -108,6 +108,9 @@ const saveSessionHandler: RequestHandler<{}, SaveSessionResponseBody, SaveSessio
         }
 
         const connection = await initConnection();
+        if (!connection) {
+            throw new Error('Error connecting to database');
+        }
         console.log("sessionData.uId:", sessionData.uId);
 
         const [result] = await connection.execute(
@@ -144,6 +147,9 @@ const getSessionsHandler: RequestHandler<{}, GetSessionsResponseBody> = async (r
         const userId = authorize(token);
 
         const connection = await initConnection();
+        if (!connection) {
+            throw new Error('Error connecting to database');
+        }
         const [sessions] = await connection.execute(
             'SELECT u_id, id, session_name FROM chat_sessions WHERE user_id = ? ORDER BY created_at DESC',
             [userId]
@@ -214,6 +220,9 @@ const deleteSessionHandler: RequestHandler<{}, DeleteSessionResponseBody, Delete
         }
 
         const connection = await initConnection();
+        if (!connection) {
+            throw new Error('Error connecting to database');
+        }
         await connection.execute('DELETE FROM chat_messages WHERE session_id = ?', [sessionId]);
         await connection.execute('DELETE FROM chat_sessions WHERE u_id = ?', [sessionId]);
         await connection.end();
