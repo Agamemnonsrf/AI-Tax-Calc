@@ -89,6 +89,31 @@ The Backend exposes a RESTful API to serve as a bridge layer between the Fronten
 
 All the sensitive data it needs like secret DB and API keys are passed to it during runtime with a .env file. If there is no DB key in the .env, the app is not able to create or sign in users. If there is no OpenAI API key, the app responds to user messages in the Tax Advisor Page with mock responses.
 
+### .env File Clarification
+```
+OPENAI_API_KEY= 
+#Used to communicate with the OpenAI Chat Completions API. If missing, a mock Tax Advisor will respond to the user
+
+DB_SECRET_KEY= 
+#Required for authentication, used for encrypting and verifying the JWT for authentication, could be any string, but the longer and more complex, the more secure. If it is not present, no accounts will be able to be made
+
+DB_HOST= 
+#Required, used to specify the address of the mysql container. Should be "mysql" if you intend to run using docker compose, or "localhost" if you intend to start the development server
+
+DB_PORT= 
+#Required, used to define the port of the mysql container's address, default mysql port is 3306
+
+DB_USER= 
+#Required, used to specify the username of the root user to make operations with in the database
+
+DB_PASS=
+#Required, used to specify the password of the root user to make operations with in the database
+
+DB_NAME=
+#Required, used to specify the name of the main database that the root user will make operations in
+```
+
+
 ## Database
 ### Analysis:
 Database running in a mysql:8 docker image.
@@ -258,4 +283,9 @@ npm i && npm run dev
 7. Run tests
 ```console
 npm run test
+```
+
+8. Manage the database from the terminal
+```console
+docker exec -it mysql-container-db mysql -u root -p
 ```
