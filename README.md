@@ -220,7 +220,7 @@ cd AI-Tax-Calc
 ```
 2. Make .env file for the Backend
 ```console
-cp .env.example ai-tax-calc-backend/.env
+cp .env.dev.example ai-tax-calc-backend/.env
 ```
 3. Go to the Backend dir and and add the keys you want to use to the .env file
 
@@ -236,6 +236,7 @@ docker run -d \
   -e MYSQL_DATABASE=aitaxcalcdb \
   -e MYSQL_USER=aitaxcalcuser \
   -e MYSQL_PASSWORD=aitaxcalcpassword \
+  -p 3306:3306 \
   mysql:8
 ```
 
