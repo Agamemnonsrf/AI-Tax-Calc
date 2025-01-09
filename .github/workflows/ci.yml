@@ -32,11 +32,9 @@ jobs:
           --health-retries=3
 
     steps:
-      # Step 1: Checkout the code
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -46,27 +44,26 @@ jobs:
         run: |
           cp .env.example ai-tax-calc-backend/.env
 
-      # Step 3: Install and test the backend
       - name: Install Backend Dependencies
         run: |
           cd ai-tax-calc-backend
           npm install
+
       - name: Run Backend Tests
         run: |
           cd ai-tax-calc-backend
           npm test
 
-      # Step 4: Install and test the frontend
       - name: Install Frontend Dependencies
         run: |
           cd ai-tax-calc
           npm install
+
       - name: Run Frontend Tests
         run: |
           cd ai-tax-calc
           npm test
 
-      # Step 5: Build and validate Docker Compose
       - name: Build and Test Docker Compose
         run: |
           docker compose up --build -d

@@ -10,7 +10,7 @@ const UserStatusBox: React.FC = () => {
         return (
             <div className="flex items-center gap-5 text-xs">
                 <p className=' border border-purple-400 p-2 rounded-lg bg-purple-600 text-white bg-opacity-50'>Signed in as <span className='font-bold'>{username}</span></p>
-                <CtaButton text="Log Out" onClick={signOut} size='xs' icon={faDoorOpen} />
+                <CtaButton text="Sign Out" onClick={signOut} size='xs' icon={faDoorOpen} />
             </div>
         );
     }
