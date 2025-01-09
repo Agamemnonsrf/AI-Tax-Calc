@@ -201,11 +201,13 @@ cp .env.example ai-tax-calc-backend/.env
 cd ai-tax-calc-backend
 ```
 
-2. Run with docker-compose on the root dir
+4. Run with docker-compose on the root dir
 ```console
 cd ..
 docker-compose up
 ```
+
+5. Open localhost:3000 in your browser
 
 ### Start Development Environment
 #### Dependencies:
