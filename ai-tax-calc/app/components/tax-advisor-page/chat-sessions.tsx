@@ -11,8 +11,8 @@ interface ChatSessionsProps {
     handleNewSession: () => void;
     handleSessionClick: (sessionId: number) => void;
     setSimulateError: (value: boolean) => void;
-    loading: boolean; // new prop
-    sessionError: string | null; // new prop
+    loading: boolean;
+    sessionError: string | null;
 }
 
 const ChatSessions: React.FC<ChatSessionsProps> = ({
@@ -24,7 +24,7 @@ const ChatSessions: React.FC<ChatSessionsProps> = ({
     loading,
     sessionError,
 }) => {
-    const { isLoggedIn } = useAuth(); // example usage
+    const { isLoggedIn } = useAuth();
     console.log(chatSessions)
     return (
         <div className="w-full h-52 md:h-auto md:w-1/4 text-black flex flex-col bg-white md:rounded-s-xl z-10">

@@ -271,8 +271,6 @@ export const CombinedForm = ({ isBusinessForm }: CombinedFormProps) => {
                                 }
                             ]}
                             colors={resultsExist ? ['#f44336', '#4caf50', '#2196f3', '#ffeb3b'] : ['#f0f0f0']}
-                            // width={chartWidth}
-                            // height={chartHeight}
                             sx={{
                                 [`& .${pieArcLabelClasses.root}`]: {
                                     fill: 'white',

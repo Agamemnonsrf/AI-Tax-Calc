@@ -176,14 +176,6 @@ const useChat = () => {
             });
             await saveSession({ id: currentSessionId, uId: session.uId, message: { role: "system", content: data.answer, index: length + 1 }, sessionName: `Session ${currentSessionId}` });
         } catch (err) {
-            // setChat((prevChat) => {
-            //     return {
-            //         messages: [
-            //             ...prevChat.messages.slice(0, -1),
-            //             { role: "system", content: `Sorry, there has been an error (${err})` },
-            //         ], sessionId: prevChat.sessionId
-            //     }
-            // });
             setError(`Sorry, there has been an error (${err})`);
             setLoading(false);
             setTimeout(() => {
