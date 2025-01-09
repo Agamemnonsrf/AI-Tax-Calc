@@ -87,9 +87,10 @@ The Backend exposes a RESTful API to serve as a bridge layer between the Fronten
 - Calculates the user's tax form data.
 - Makes requests to the OpenAI API for the Tax Advisor. 
 
-All the sensitive data it needs like secret DB and API keys are passed to it during runtime with a .env file. If there is no DB key in the .env, the app is not able to create or sign in users. If there is no OpenAI API key, the app responds to user messages in the Tax Advisor Pages with mock responses.
+All the sensitive data it needs like secret DB and API keys are passed to it during runtime with a .env file. If there is no DB key in the .env, the app is not able to create or sign in users. If there is no OpenAI API key, the app responds to user messages in the Tax Advisor Page with mock responses.
 
 ## Database
+### Analysis:
 Database running in a mysql:8 docker image.
 
 The Backend creates 3 tables on initialization using SQL Syntax
@@ -136,9 +137,10 @@ CREATE TABLE IF NOT EXISTS chat_messages (
 All the Tax Advisor chat messages of all the chat sessions for each user are created in this table.
 
 ## OpenAI API
-The OpenAI secret key is held in the .env file of the Backend. If there is no such key present in the .env, an alternate mock Tax Advisor in used for the chat instead.
+### Analysis:
+The OpenAI secret key is held in the .env file of the Backend. If there is no such key present in the .env, an alternate mock Tax Advisor is used for the chat instead.
 
-When a user messages the Tax Advisor, the Backend provides the following to the OpenAI API using the secret key:
+When a user messages the Tax Advisor, the Backend provides the following to the OpenAI Chat Completions API using the secret key:
 - A starting built-in instruction for the Tax Advisor 
 ```
 "You are a helpful tax advisor. You answer plainly, straightforwardly, to the point, with short and easy to read responses for the user. Use markdown to format your responses."
@@ -153,7 +155,7 @@ The LLM model used is gpt-4o-mini.
 - Docker Compose
 
 ### Analysis:
-The Frontend and Backend each contain a Dockerfile and .dockerignore. The docker-compose.yml file is at the root directory of the repository. It fires up the three services of the ai-tax-network, starting with the mysql service on default MySQL port 3306 and waits for it to finish starting up. Then, it starts the Backend service, completes the actions specified on the Backend Dockerfile and specifies the .env file to be used, exposing the app on port 5000 at the end. Finally, does the same for the Frontend service on port 3000.
+The Frontend and Backend each contain a Dockerfile and .dockerignore. The docker-compose.yml file is at the root directory of the repository. It fires up the three services of the ai-tax-network, starting with the mysql service on default MySQL port 3306 and waits for it to finish starting up. Then, it starts the Backend service, completes the actions specified on the Backend Dockerfile and specifies the .env file to be used, exposing the app on port 5000 at the end. Finally, it does the same for the Frontend service on port 3000.
 
 ## Continuous Integration
 - Github Actions
