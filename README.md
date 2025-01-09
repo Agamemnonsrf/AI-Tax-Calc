@@ -1,5 +1,7 @@
 # AI-Tax-Calc
 
+![header image](https://github.com/Agamemnonsrf/AI-Tax-Calc/blob/main/aitaxcalc-headerimg.png?raw=true)
+
 ## Table of Contents
 1. [Introduction](#introduction)
 2. [Implementation](#implementation)
